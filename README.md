@@ -307,4 +307,4 @@ GET /characters/search?name=All
 
 ## Demo Video
 
-[Click here to watch the demo](<REST_API_DEMO.mkv >)
+[Click here to watch the demo](REST_API_DEMO.mkv )
