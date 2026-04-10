@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,9 +12,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/characters")
+@RequestMapping("/api/characters")
 public class CharacterapiController {
 
     private final CharacterService characterService;
@@ -54,7 +54,8 @@ public class CharacterapiController {
 
     // PUT update existing character
     @PutMapping("/{id}")
-    public ResponseEntity<Character> updateCharacter(@PathVariable Long id, @RequestBody Character updatedCharacter) {
+    public ResponseEntity<Character> updateCharacter(@PathVariable Long id,
+                                                      @RequestBody Character updatedCharacter) {
         Character character = characterService.updateCharacter(id, updatedCharacter);
         if (character != null) {
             return ResponseEntity.ok(character);
@@ -70,15 +71,17 @@ public class CharacterapiController {
         return ResponseEntity.noContent().build();
     }
 
-    // GET characters by affiliation (category endpoint)
+    // GET characters by affiliation
     @GetMapping("/affiliation/{affiliation}")
-    public ResponseEntity<Collection<Character>> getCharactersByAffiliation(@PathVariable String affiliation) {
+    public ResponseEntity<Collection<Character>> getCharactersByAffiliation(
+            @PathVariable String affiliation) {
         return ResponseEntity.ok(characterService.getCharactersByAffiliation(affiliation));
     }
 
     // GET characters by name search
     @GetMapping("/search")
-    public ResponseEntity<Collection<Character>> searchCharactersByName(@RequestParam(required = false) String name) {
+    public ResponseEntity<Collection<Character>> searchCharactersByName(
+            @RequestParam(required = false) String name) {
         List<Character> characters;
         if (name != null) {
             characters = characterService.searchCharactersByName(name);
